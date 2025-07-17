@@ -3,23 +3,23 @@ config:
   mirror: http://mirrors.kernel.org
   distro: debian
   variant: minbase
-  arch: armhf
-  suite: bullseye
-  files: mini210-bullseye
-  hostname: mini210
+  arch: arm64
+  suite: trixie
+  files: nanopc-t6-trixie
+  hostname: nanopc-t6-lts
   locale: en_US.UTF-8
 
 actions:
   script: | # setup apt sources
     cat > /etc/apt/sources.list << EOF
-    deb {config.mirror}/{config.distro} {config.suite} main contrib non-free
-    #deb-src {config.mirror}/{config.distro} {config.suite} main contrib non-free
+    deb {config.mirror}/{config.distro} {config.suite} main contrib non-free non-free-firmware
+    #deb-src {config.mirror}/{config.distro} {config.suite} main contrib non-free non-free-firmware
     EOF
 
     if [[ "{config.suite}" != "experimental" ]]; then
       cat >> /etc/apt/sources.list << EOF
-    deb http://security.debian.org {config.suite}/updates main contrib non-free
-    #deb-src http://security.debian.org {config.suite}/updates main contrib non-free
+    deb http://security.debian.org {config.suite}-updates main contrib non-free non-free-firmware
+    #deb-src http://security.debian.org {config.suite}-updates main contrib non-free non-free-firmware
     EOF
     fi
 
